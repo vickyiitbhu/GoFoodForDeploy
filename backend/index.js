@@ -1,16 +1,24 @@
 const express = require('express')
 const app = express()
 const port = 5000
+const cors=require('cors')
 const mongoDB=require('./db')
 
-app.use((req,res,next)=>{
-  res.setHeader("Access-Control-Allow-Origin","*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type,Accept"
-  );
-  next();
-})
+// app.use((req,res,next)=>{
+//   res.setHeader("Access-Control-Allow-Origin","*");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type,Accept"
+//   );
+//   next();
+// })
+app.use(cors(
+  {
+    origin: ["*"],
+    methods: ["POST","GET"],
+    credentials: true
+  }
+))
 app.use(express.json());
 mongoDB();
 app.get('/', (req, res) => {
